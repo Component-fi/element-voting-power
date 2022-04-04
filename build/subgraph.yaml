@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: VotingVault
@@ -14,12 +14,12 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-      - VotingChangeEvent
-      - Voter
+        - VotingChangeEvent
+        - Voter
       abis:
         - name: VotingVault
-          file: ./abis/VotingVault.json
+          file: VotingVault/abis/VotingVault.json
       eventHandlers:
         - event: VoteChange(indexed address,indexed address,int256)
           handler: handleVoteChange
-      file: ./src/mapping.ts
+      file: VotingVault/VotingVault.wasm
