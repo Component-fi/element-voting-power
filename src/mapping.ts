@@ -3,8 +3,7 @@ import { VoteChange } from "../generated/VotingVault/VotingVault";
 import { VoteChangeEvent, Voter } from "../generated/schema";
 
 export function handleVoteChange(event: VoteChange): void {
-  const id =
-    event.logIndex.toString() + "-" + event.transaction.hash.toHexString();
+  const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   const eventObject = new VoteChangeEvent(id);
 
