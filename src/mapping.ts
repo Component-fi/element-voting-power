@@ -15,6 +15,7 @@ export function handleVoteChange(event: VoteChange): void {
   eventObject.to = toVoter.id;
 
   eventObject.amount = event.params.amount;
+  eventObject.timestamp = event.block.timestamp;
   eventObject.save();
 }
 
