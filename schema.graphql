@@ -1,14 +1,36 @@
+# VoteChange Events emitted by the FrozenLockingVault
 type VoteChangeEvent @entity {
   id: ID!
   timestamp: BigInt!
-  from: Voter!
+  from: Delegator!
   to: Voter!
   amount: BigInt!
+  delegation: Delegation
 }
 
+# Any element user that has been delegated votes
 type Voter @entity {
   id: ID!
-  FromEvents: [VoteChangeEvent!]! @derivedFrom(field: "from")
   ToEvents: [VoteChangeEvent!]! @derivedFrom(field: "to")
   votingPower: BigInt!
+  Delegations: [Delegation!]! @derivedFrom(field: "voter")
+  # Number of unique delegators with a net positive amount
+  numberOfDelegations: BigInt!
+}
+
+# Any element user that has delegated votes
+type Delegator @entity {
+  id: ID!
+  DelegationEvents: [VoteChangeEvent!]! @derivedFrom(field: "from")
+  Delegations: [Delegation!]! @derivedFrom(field: "delegator")
+}
+
+# The net amount delegated from a single voter to a single delegate
+type Delegation @entity {
+  id: ID!
+  voter: Voter!
+  delegator: Delegator!
+  events: [VoteChangeEvent!]! @derivedFrom(field: "delegation")
+  # Net amount delegated (Updated every VoteChangeEvent with matching voter + delegator)
+  amount: BigInt!
 }
