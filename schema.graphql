@@ -6,6 +6,7 @@ type VoteChangeEvent @entity {
   to: Voter!
   amount: BigInt!
   delegation: Delegation
+  vault: String!
 }
 
 # Any element user that has been delegated votes

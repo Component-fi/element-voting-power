@@ -3,29 +3,6 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: FrozenLockingVault
-    network: mainnet
-    source:
-      startBlock: 14491845
-      address: "0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD"
-      abi: FrozenLockingVault
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-      - VotingChangeEvent
-      - Voter
-      - Delegation
-      - Delegator
-      abis:
-        - name: FrozenLockingVault
-          file: ./abis/FrozenLockingVault.json
-      eventHandlers:
-        - event: VoteChange(indexed address,indexed address,int256)
-          handler: handleVoteChange
-      file: ./src/mapping.ts
-  - kind: ethereum
     name: VestingVault
     network: mainnet
     source:
@@ -46,5 +23,28 @@ dataSources:
           file: ./abis/VestingVault.json
       eventHandlers:
         - event: VoteChange(indexed address,indexed address,int256)
-          handler: handleVoteChange
-      file: ./src/mapping.ts
+          handler: handleVestingVoteChange
+      file: ./src/vesting_mapping.ts
+  - kind: ethereum
+    name: FrozenLockingVault
+    network: mainnet
+    source:
+      startBlock: 14491845
+      address: "0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD"
+      abi: FrozenLockingVault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+      - VotingChangeEvent
+      - Voter
+      - Delegation
+      - Delegator
+      abis:
+        - name: FrozenLockingVault
+          file: ./abis/FrozenLockingVault.json
+      eventHandlers:
+        - event: VoteChange(indexed address,indexed address,int256)
+          handler: handleFrozenVoteChange
+      file: ./src/frozen_mapping.ts
